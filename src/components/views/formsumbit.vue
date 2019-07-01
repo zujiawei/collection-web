@@ -52,7 +52,7 @@
   import axios from 'axios'
 
   export default {
-    data () {
+    data: function () {
       var checkName = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('姓名不能为空'))
