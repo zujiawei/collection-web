@@ -27,25 +27,13 @@
                 </template>
                 <el-menu-item index="/note">发车工单</el-menu-item>
               </el-submenu>
-              <el-menu-item index="2" disabled>
-                <i class="el-icon-menu"></i>
-                <span slot="title">固移融合</span>
-              </el-menu-item>
-              <el-submenu index="3">
+              <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-menu"></i>
-                  <span slot="title">爱奇艺</span>
+                  <span slot="title">信息维护</span>
                 </template>
                 <el-menu-item index="/iqy/callinterface">接口调用</el-menu-item>
                 <el-menu-item index="/iqy/simulation">接口模拟</el-menu-item>
-              </el-submenu>
-              <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">工具箱</span>
-                </template>
-                <el-menu-item index="/tools/upgrade">一键升级</el-menu-item>
-                <el-menu-item index="4-2">日志监控</el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>

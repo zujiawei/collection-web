@@ -157,13 +157,29 @@
           let objectUrl = URL.createObjectURL(blob);
           window.location.href = objectUrl;
         })
-        // console.log(res)
-        // let res1 = res.data.data
-        // for (let i = 0; i < res1.length; i++) {
-        //   this.tableData.push(res1[i])
-        // }
-        // console.log(this.tableData)
         },
+      search(){
+        let name = this.name
+        let carNum = this.carNum
+        let area = this.area
+        let frameNum = this.frameNum
+        let startDate = this.startDate
+        let date = {
+          name: name,
+          carNum: carNum,
+          area: area,
+          frameNum: frameNum,
+          startDate: startDate
+        }
+        axios.post('api/from/search',date).then((response) => {
+          console.log(response)
+          let res1 = response.data
+          for (let i = 0; i < res1.length; i++) {
+            this.tableData.push(res1[i])
+          }
+          console.log(this.tableData)
+        })
+      },
       parseResult (result) {
         if (result.resultCode === 0) {
           this.$message({
