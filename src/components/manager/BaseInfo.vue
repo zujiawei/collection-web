@@ -6,9 +6,8 @@
           <el-button type="primary" icon="el-icon-edit" @click="handleCreate('driver')">添加司机信息</el-button>
           <el-table
             :data="tableData"
-            height="250"
             border
-            style="width: 100%">
+            style="width: 100% ; height:auto">
             <el-table-column
               prop="name"
               label="司机姓名">
@@ -24,12 +23,11 @@
         <div class="grid-content bg-purple-dark">
           <el-button type="primary" icon="el-icon-edit" @click="handleCreate('car')">添加车牌信息</el-button>
           <el-table
-            :data="tableData"
-            height="250"
+            :data="tableData1"
             border
-            style="width: 100%">
+            style="width: 100% ; height:auto">
             <el-table-column
-              prop="carNum"
+              prop="carNumber"
               label="车牌号">
             </el-table-column>
           </el-table>
@@ -39,12 +37,11 @@
         <div class="grid-content bg-purple-dark">
           <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区信息</el-button>
           <el-table
-            :data="tableData"
-            height="250"
+            :data="tableData2"
             border
-            style="width: 100%">
+            style="width: 100% ; height:auto">
             <el-table-column
-              prop="area"
+              prop="number"
               label="库区">
             </el-table-column>
           </el-table>
@@ -54,12 +51,11 @@
         <div class="grid-content bg-purple-dark">
           <el-button type="primary" icon="el-icon-edit" @click="handleCreate('frame')">添加大架号</el-button>
           <el-table
-            :data="tableData"
-            height="250"
+            :data="tableData3"
             border
-            style="width: 100%">
+            style="width: 100% ; height:auto">
             <el-table-column
-              prop="frameNum"
+              prop="number"
               label="大架号">
             </el-table-column>
           </el-table>
@@ -89,8 +85,8 @@
         <el-input placeholder="请输入大架号" v-model="frameNum" :disabled="frameInput" clearable></el-input>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+        <el-button @click="cancel()">取 消</el-button>
+        <el-button type="primary" @click="submit(type)">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -100,21 +96,24 @@
   import axios from 'axios'
 
   export default {
-    data() {
+    data () {
       return {
+        type: '',
         name: '',
         phoneNumber: '',
         carNum: '',
         area: '',
         frameNum: '',
         startDate: '',
-        dialogFormVisible: true,
+        dialogFormVisible: false,
         driverInput: true,
         carInput: true,
         areaInput: true,
         frameInput: true,
-
         tableData: [],
+        tableData1: [],
+        tableData2: [],
+        tableData3: [],
         rules: {
           tag: [
             {required: true, message: '请输入标签名称', trigger: 'blur'},
@@ -126,41 +125,54 @@
       }
     },
     methods: {
-      init() {
+      init () {
+        axios.get('api/from/getInfos')
+          .then((response) => {
+            let res = response.data
+            console.log(res)
+            let driver = res.drivers
+            let carNumbers = res.carNumbers
+            let shelves = res.shelves
+            let warehouses = res.warehouses
+            for (let i = 0; i < driver.length; i++) {
+              this.tableData.push(driver[i])
+            }
+            console.log(this.tableData)
+            for (let i = 0; i < carNumbers.length; i++) {
+              this.tableData1.push(carNumbers[i])
+            }
+            for (let i = 0; i < shelves.length; i++) {
+              this.tableData2.push(shelves[i])
+            }
+            for (let i = 0; i < warehouses.length; i++) {
+              this.tableData3.push(warehouses[i])
+            }
+            // console.log(this.nameOptions)
+            // console.log(this.carNumberOptions)
+            // console.log(this.shelvesOptions)
+            // console.log(this.wareHousesOptions)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       },
-      handleCreate(type) {
+      handleCreate (type) {
         if (type === 'driver') {
           this.driverInput = false
+          this.type = 'driver'
         } else if (type === 'car') {
+          this.type = 'car'
           this.carInput = false
         } else if (type === 'area') {
+          this.type = 'area'
           this.areaInput = false
         } else if (type === 'frame') {
+          this.type = 'frame'
           this.frameInput = false
         }
-        this.dialogFormVisible = true;
+        this.dialogFormVisible = true
       },
-      excel() {
-        let name = this.name
-        let carNum = this.carNum
-        let area = this.area
-        let frameNum = this.frameNum
-        let startDate = this.startDate
-        let date = {
-          name: name,
-          carNum: carNum,
-          area: area,
-          frameNum: frameNum,
-          startDate: startDate
-        }
-        axios.post('api/from/excel', date, {responseType: 'arraybuffer'}).then((response) => {
-          console.log(response)
-          let blob = new Blob([response.data], {type: "application/vnd.ms-excel"});
-          let objectUrl = URL.createObjectURL(blob);
-          window.location.href = objectUrl;
-        })
-      },
-      search() {
+      search () {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -182,21 +194,118 @@
           console.log(this.tableData)
         })
       },
-      parseResult(result) {
-        if (result.resultCode === 0) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
-        } else {
-          this.$message({
-            message: result.resultMsg,
-            type: 'error'
-          })
+      submit (type) {
+        let name = this.name
+        let phoneNumber = this.phoneNumber
+        let carNum = this.carNum
+        let area = this.area
+        let frameNum = this.frameNum
+        if (type === 'driver') {
+          if (name == null || name == '') {
+            this.$message.error('司机姓名不能为空')
+            return
+          }
+          if (phoneNumber == null || phoneNumber == '') {
+            this.$message.error('司机电话号码不能为空')
+            return
+          }
+          let data = {
+            name: name,
+            phoneNumber: phoneNumber
+          }
+          this.addName(data)
+          this.dialogFormVisible = false
+          this.name = ''
+          this.phoneNumber = ''
+          this.driverInput = true
+        } else if (type === 'car') {
+          if (carNum == null || carNum == '') {
+            this.$message.error('车牌号不能为空')
+            return
+          }
+          let data = {
+            carNumber: carNum,
+          }
+          this.addCarNum(data)
+          this.dialogFormVisible = false
+          this.carNum = ''
+          this.carInput = true
+        } else if (type === 'area') {
+          if (area == null || area == '') {
+            this.$message.error('车牌号不能为空')
+            return
+          }
+          let data = {
+            number: area,
+          }
+          this.addarea(data)
+          this.dialogFormVisible = false
+          this.area = ''
+          this.areaInput = true
+        } else if (type === 'frame') {
+          if (frameNum == null || frameNum == '') {
+            this.$message.error('车牌号不能为空')
+            return
+          }
+          let data = {
+            number: frame,
+          }
+          this.addshelves(data)
+          this.dialogFormVisible = false
+          this.frame = ''
+          this.frameInput = true
         }
+      },
+      async addName (data) {
+        try {
+          let res = axios.post('/api/driver', data)
+          this.$message.success('提交信息成功，祝您一路顺风')
+        } catch (error) {
+          console.log(error)
+          this.$message.error(error)
+        }
+      },
+      async addCarNum (data) {
+        try {
+          let res = axios.post('/api/carNumber', data)
+          this.$message.success('提交信息成功，祝您一路顺风')
+        } catch (error) {
+          console.log(error)
+          this.$message.error(error)
+        }
+      },
+      async addarea (data) {
+        try {
+          let res = axios.post('/api/warehouse', data)
+          this.$message.success('提交信息成功，祝您一路顺风')
+        } catch (error) {
+          console.log(error)
+          this.$message.error(error)
+        }
+      },
+      async addshelves (data) {
+        try {
+          let res = axios.post('/api/shelves', data)
+          this.$message.success('提交信息成功，祝您一路顺风')
+        } catch (error) {
+          console.log(error)
+          this.$message.error(error)
+        }
+      },
+      cancel () {
+        this.dialogFormVisible = false
+        this.driverInput = true
+        this.carInput = true
+        this.areaInput = true
+        this.frameInput = true
+        this.name = ''
+        this.phoneNumber = ''
+        this.carNum = ''
+        this.area = ''
+        this.frame = ''
       }
     },
-    created() {
+    created () {
       this.init()
     }
   }

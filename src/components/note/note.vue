@@ -172,8 +172,9 @@
           startDate: startDate
         }
         axios.post('api/from/search',date).then((response) => {
+          this.tableData = []
           console.log(response)
-          let res1 = response.data
+          let res1 = response.data.data
           for (let i = 0; i < res1.length; i++) {
             this.tableData.push(res1[i])
           }

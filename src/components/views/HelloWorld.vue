@@ -32,8 +32,7 @@
                   <i class="el-icon-menu"></i>
                   <span slot="title">信息维护</span>
                 </template>
-                <el-menu-item index="/iqy/callinterface">接口调用</el-menu-item>
-                <el-menu-item index="/iqy/simulation">接口模拟</el-menu-item>
+                <el-menu-item index="/info">信息维护</el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>
