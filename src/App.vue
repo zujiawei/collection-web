@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <HelloWorld />
+    <router-view />
   </div>
 </template>
 
 <style>
   body{
     margin: 0;
-    background-color: #545c64;
+    background-color: #fffef6;
   }
 </style>
 
