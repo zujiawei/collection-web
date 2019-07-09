@@ -1,34 +1,34 @@
 <template>
   <div class="Upgrade">
     <div class="demo-search">
-      <el-row class="input" :gutter="20">
-        <el-col :span="4">
+      <el-row class="input" :gutter="6">
+        <el-col :xs="4" :sm="1" :md="1" :lg="1" :xl="4">
           <div class="grid-content bg-purple">
-            <label>司机姓名:</label>
+            <label>姓名:</label>
             <el-input v-model="name" placeholder="请输入司机姓名"></el-input>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="4" :sm="1" :md="1" :lg="1" :xl="4">
           <div class="grid-content bg-purple">
             <label>车号:</label>
             <el-input v-model="carNum" placeholder="请输入车号"></el-input>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="4" :sm="1" :md="1" :lg="1" :xl="4">
           <div class="grid-content bg-purple">
             <label>库区:</label>
             <el-input v-model="area" placeholder="请输入库区"></el-input>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="4" :sm="1" :md="1" :lg="1" :xl="4">
           <div class="grid-content bg-purple">
             <label>大架号:</label>
             <el-input v-model="frameNum" placeholder="请输入大架号"></el-input>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="4" :sm="1" :md="1" :lg="1" :xl="4">
           <div class="grid-content bg-purple">
-            <label>发车日期:</label>
+            <label>发车日:</label>
             <el-date-picker
               v-model="startDate"
               type="date"
@@ -39,59 +39,57 @@
 
       </el-row>
 
-      <el-row class="submit" :gutter="20">
-        <el-col :span="1" offset="8">
+      <el-row class="submit" :gutter="6" type="flex" justify="center">
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4">
           <div class="grid-content bg-purple">
             <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
           </div>
         </el-col>
-        <el-col :span="1" offset="1">
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4">
           <div class="grid-content bg-purple">
             <el-button type="primary" icon="el-icon-refresh-left">重置</el-button>
           </div>
         </el-col>
-        <el-col :span="1" offset="1">
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4">
           <div class="grid-content bg-purple">
             <el-button type="primary"><i class="el-icon-upload el-icon--right" @click="excel()">导出Excel</i></el-button>
           </div>
         </el-col>
       </el-row>
-
     </div>
+
     <div class="demo-block">
-      <div style="font-weight: bold;">发车工单</div>
-      <div id="table">
-        <el-table
-          :data="tableData"
-          height="700"
-          border
-          style="width: 100%">
-          <el-table-column
-            prop="name"
-            label="司机姓名">
-          </el-table-column>
-          <el-table-column
-            prop="carNum"
-            label="车号">
-          </el-table-column>
-          <el-table-column
-            prop="area"
-            label="库区">
-          </el-table-column>
-          <el-table-column
-            prop="frameNum"
-            label="大架号">
-          </el-table-column>
-          <el-table-column
-            prop="startDate"
-            label="发车日期">
-          </el-table-column>
-        </el-table>
-
-
-      </div>
-
+          <div style="font-weight: bold;">发车工单</div>
+          <div id="table">
+            <el-table
+              :data="tableData"
+              height="700"
+              border
+              style="width: 100%">
+              <el-table-column
+                prop="name"
+                label="司机姓名">
+              </el-table-column>
+              <el-table-column
+                prop="carNum"
+                label="车号">
+              </el-table-column>
+              <el-table-column
+                prop="area"
+                label="库区">
+              </el-table-column>
+              <el-table-column
+                prop="frameNum"
+                label="大架号">
+              </el-table-column>
+              <el-table-column
+                prop="startDate"
+                label="发车日期">
+              </el-table-column>
+            </el-table>
+          </div>
     </div>
+
   </div>
 </template>
 
@@ -100,7 +98,7 @@
 
   export default {
     name: 'Upgrade',
-    data () {
+    data() {
       return {
         name: '',
         carNum: '',
@@ -120,7 +118,7 @@
       }
     },
     methods: {
-      init () {
+      init() {
         axios.get('api/from/getNoteData').then((response) => {
           console.log(response.data.data)
           let res = response.data.data
@@ -138,7 +136,7 @@
           })
         })
       },
-      excel(){
+      excel() {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -151,14 +149,14 @@
           frameNum: frameNum,
           startDate: startDate
         }
-        axios.post('api/from/excel',date,{responseType: 'arraybuffer'}).then((response) => {
+        axios.post('api/from/excel', date, {responseType: 'arraybuffer'}).then((response) => {
           console.log(response)
           let blob = new Blob([response.data], {type: "application/vnd.ms-excel"});
           let objectUrl = URL.createObjectURL(blob);
           window.location.href = objectUrl;
         })
-        },
-      search(){
+      },
+      search() {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -171,7 +169,7 @@
           frameNum: frameNum,
           startDate: startDate
         }
-        axios.post('api/from/search',date).then((response) => {
+        axios.post('api/from/search', date).then((response) => {
           this.tableData = []
           console.log(response)
           let res1 = response.data.data
@@ -181,7 +179,7 @@
           console.log(this.tableData)
         })
       },
-      parseResult (result) {
+      parseResult(result) {
         if (result.resultCode === 0) {
           this.$message({
             message: '操作成功',
@@ -195,7 +193,7 @@
         }
       }
     },
-    created () {
+    created() {
       this.init()
     }
   }

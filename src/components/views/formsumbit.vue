@@ -1,52 +1,100 @@
 <template>
   <div class="from">
+    <h1>发车专用</h1>
     <el-form :label-position="labelPosition" :rules="rules" ref="form" :model="form" label-width="80px">
-      <el-form-item label="司机姓名:">
-        <el-select v-model="form.name" placeholder="请选择">
-          <el-option
-            v-for="item in nameOptions"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="车号:">
-        <el-select v-model="form.carNum" placeholder="请选择">
-          <el-option
-            v-for="item in carNumberOptions"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="库区">
-        <el-select v-model="form.area" placeholder="请选择">
-          <el-option
-            v-for="item in wareHousesOptions"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="大架号:">
-        <el-select v-model="form.frameNum" placeholder="请选择">
-          <el-option
-            v-for="item in shelvesOptions"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="发车日期:">
-        <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"></el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即提交</el-button>
-      </el-form-item>
+      <el-row>
+        <el-col :span="24">
+          <el-form-item label="姓名:" prop="name"/>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-select v-model="form.name" placeholder="请选择">
+            <el-option
+              v-for="item in nameOptions"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-form-item label="车号:" prop="carNum"/>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-select v-model="form.carNum" placeholder="请选择">
+            <el-option
+              v-for="item in carNumberOptions"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-form-item label="库区" prop="area"/>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col>
+          <el-select v-model="form.area" placeholder="请选择">
+            <el-option
+              v-for="item in wareHousesOptions"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-form-item label="大架号:" prop="frameNum"/>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-select v-model="form.frameNum" placeholder="请选择">
+            <el-option
+              v-for="item in shelvesOptions"
+              :key="item"
+              :label="item"
+              :value="item">
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col>
+          <el-form-item label="发车日:" prop="startDate"/>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col span="24">
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate"></el-date-picker>
+        </el-col>
+      </el-row>
+      <br>
+      <br>
+      <br>
+      <el-row>
+        <el-col>
+          <el-button type="primary" @click="onSubmit">立即提交</el-button>
+        </el-col>
+      </el-row>
     </el-form>
   </div>
 </template>
@@ -75,7 +123,19 @@
         },
         rules: {
           name: [
-            {validator: checkName, trigger: 'blur'}
+            { required: true }
+          ],
+          carNum: [
+            { required: true }
+          ],
+          area: [
+            { required: true }
+          ],
+          frameNum: [
+            { required: true }
+          ],
+          startDate: [
+            { required: true }
           ]
         }
       }
@@ -166,17 +226,16 @@
   }
 </script>
 <style>
- .from{
-   text-align: center; /*让div内部文字居中*/
-   background-color: #fff;
-   border-radius: 20px;
-   width: 300px;
-   height: 350px;
-   margin: auto;
-   position: absolute;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
- }
+  .from {
+    text-align: center;
+    background-color: white;
+    border-radius: 20px;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 </style>

@@ -6,7 +6,6 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -19,7 +18,6 @@ module.exports = {
         pathRewrite: {
           '^/api': '/collection'
         }
-
       }
       },
     // Various Dev Server settings
@@ -60,8 +58,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: '',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

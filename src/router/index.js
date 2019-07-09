@@ -9,6 +9,7 @@ import App from '@/App'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'hash',
   routes: [
     {
       path: '/frist',
