@@ -146,7 +146,7 @@
     },
     methods: {
       async getDriverName() {
-        axios.get('api/from/getInfos')
+        axios.get('from/getInfos')
           .then((response) => {
             let res = response.data
             let driver = res.drivers
@@ -215,7 +215,7 @@
       },
       async add(data) {
         try {
-          let res = axios.post('/api/from', data)
+          let res = axios.post('/from', data)
           this.$message.success('提交信息成功，祝您一路顺风')
         } catch (error) {
           console.log(error)
@@ -229,9 +229,8 @@
   .from {
     text-align: center;
     background-color: white;
-    border-radius: 20px;
-    width: auto;
-    height: auto;
+    width: 375px;
+    height: 820px;
     position: absolute;
     top: 0;
     left: 0;

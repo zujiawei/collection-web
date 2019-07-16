@@ -1,9 +1,9 @@
 <template>
   <div class="navigate">
-    <el-row :gutter="1">
-        <el-col :span="2">
+    <el-row>
+        <el-col :xs="3" :xl="2">
         <el-aside style="width: 100%">
-            <div class="banner" style="padding-top: 18px; text-align:center; color:white">辅助工具</div>
+          <div class="banner" style=" padding:0;text-align:center; color:white"><span>辅助工具</span></div>
             <el-menu
               :router="true"
               :default-active="$route.path"
@@ -14,13 +14,13 @@
               text-color="#fff"
               active-text-color="#ffd04b">
               <div>
-                <el-menu-item index="/note">工单</el-menu-item>
-                <el-menu-item index="/info">录入</el-menu-item>
+                <el-menu-item style="text-align: center;padding: 0" index="/note">工单</el-menu-item>
+                <el-menu-item style="text-align: center;padding: 0" index="/info">录入</el-menu-item>
               </div>
             </el-menu>
           </el-aside>
         </el-col>
-      <el-col :span="22">
+      <el-col :xs="21" :xl="22">
             <el-header></el-header>
             <el-main>
               <router-view/>
@@ -83,7 +83,7 @@
   }
 
   .banner {
-    height: 100%;
+    height: 60px;
     background-color: #434A50;
   }
 </style>

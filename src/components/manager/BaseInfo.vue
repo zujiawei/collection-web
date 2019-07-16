@@ -1,67 +1,145 @@
 <template>
   <div class="demo-search">
-    <el-row class="1" :gutter="24">
-      <el-col :span="6">
-        <div class="grid-content bg-purple-dark">
-          <el-button type="primary" icon="el-icon-edit" @click="handleCreate('driver')">添加司机信息</el-button>
-          <el-table
-            :data="tableData"
-            border
-            style="width: 100% ; height:auto">
-            <el-table-column
-              prop="name"
-              label="司机姓名">
-            </el-table-column>
-            <el-table-column
-              prop="phoneNumber"
-              label="手机号">
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-dark">
-          <el-button type="primary" icon="el-icon-edit" @click="handleCreate('car')">添加车牌信息</el-button>
-          <el-table
-            :data="tableData1"
-            border
-            style="width: 100% ; height:auto">
-            <el-table-column
-              prop="carNumber"
-              label="车牌号">
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-dark">
-          <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区信息</el-button>
-          <el-table
-            :data="tableData2"
-            border
-            style="width: 100% ; height:auto">
-            <el-table-column
-              prop="number"
-              label="库区">
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-dark">
-          <el-button type="primary" icon="el-icon-edit" @click="handleCreate('frame')">添加大架号</el-button>
-          <el-table
-            :data="tableData3"
-            border
-            style="width: 100% ; height:auto">
-            <el-table-column
-              prop="number"
-              label="大架号">
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="hidden-xs-only" style="border: 1px">
+      <el-row class="xs">
+        <el-col :xs="5" :xl="6">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('driver')">添加司机</el-button>
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="name"
+                label="司机姓名">
+              </el-table-column>
+              <el-table-column
+                prop="phoneNumber"
+                label="手机号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :xs="5" :xl="6">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('car')">添加车牌</el-button>
+            <el-table
+              :data="tableData1"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="carNumber"
+                label="车牌号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :xs="5" :xl="6">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区</el-button>
+            <el-table
+              :data="tableData2"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="number"
+                label="库区">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :xs="5" :xl="6">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('frame')">添加大架</el-button>
+            <el-table
+              :data="tableData3"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="number"
+                label="大架号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+    <div class="hidden-xl-only" style="border: 1px">
+      <el-row class="xl-1" type="flex" justify="center">
+        <el-col :xs="22">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('driver')">添加司机</el-button>
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="name"
+                label="司机姓名">
+              </el-table-column>
+              <el-table-column
+                prop="phoneNumber"
+                label="手机号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
+      <br>
+      <br>
+      <el-row class="xl-1" type="flex" justify="center">
+        <el-col :xs="22">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('car')">添加车牌</el-button>
+            <el-table
+              :data="tableData1"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="carNumber"
+                label="车牌号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
+      <br>
+      <br>
+      <el-row class="xl-1" type="flex" justify="center">
+        <el-col :xs="22">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区</el-button>
+            <el-table
+              :data="tableData2"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="number"
+                label="库区">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
+      <br>
+      <br>
+      <el-row class="xl-1" type="flex" justify="center">
+        <el-col :xs="22">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('frame')">添加大架</el-button>
+            <el-table
+              :data="tableData3"
+              border
+              style="width: 100% ; height:auto">
+              <el-table-column
+                prop="number"
+                label="大架号">
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
 
     <el-dialog title="新增" :visible.sync="dialogFormVisible">
       <div class="demo-block">
@@ -89,7 +167,6 @@
         <el-button type="primary" @click="submit(type)">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 <script>
@@ -126,7 +203,7 @@
     },
     methods: {
       init () {
-        axios.get('api/from/getInfos')
+        axios.get('from/getInfos')
           .then((response) => {
             let res = response.data
             console.log(res)
@@ -185,7 +262,7 @@
           frameNum: frameNum,
           startDate: startDate
         }
-        axios.post('api/from/search', date).then((response) => {
+        axios.post('from/search', date).then((response) => {
           console.log(response)
           let res1 = response.data
           for (let i = 0; i < res1.length; i++) {
@@ -258,8 +335,8 @@
       },
       async addName (data) {
         try {
-          let res = axios.post('/api/driver', data)
-          this.$message.success('提交信息成功，祝您一路顺风')
+          let res = axios.post('driver', data)
+          this.$message.success('提交信息成功')
         } catch (error) {
           console.log(error)
           this.$message.error(error)
@@ -267,8 +344,8 @@
       },
       async addCarNum (data) {
         try {
-          let res = axios.post('/api/carNumber', data)
-          this.$message.success('提交信息成功，祝您一路顺风')
+          let res = axios.post('carNumber', data)
+          this.$message.success('提交信息成功')
         } catch (error) {
           console.log(error)
           this.$message.error(error)
@@ -276,8 +353,8 @@
       },
       async addarea (data) {
         try {
-          let res = axios.post('/api/warehouse', data)
-          this.$message.success('提交信息成功，祝您一路顺风')
+          let res = axios.post('warehouse', data)
+          this.$message.success('提交信息成功')
         } catch (error) {
           console.log(error)
           this.$message.error(error)
@@ -285,8 +362,8 @@
       },
       async addshelves (data) {
         try {
-          let res = axios.post('/api/shelves', data)
-          this.$message.success('提交信息成功，祝您一路顺风')
+          let res = axios.post('shelves', data)
+          this.$message.success('提交信息成功')
         } catch (error) {
           console.log(error)
           this.$message.error(error)
@@ -313,14 +390,6 @@
 <style>
   .el-col {
     border-radius: 4px;
-  }
-
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-
-  .bg-purple {
-    background: #d3dce6;
   }
 
   .bg-purple-light {
