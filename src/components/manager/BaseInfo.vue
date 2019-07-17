@@ -2,13 +2,12 @@
   <div class="demo-search">
     <div class="hidden-xs-only" style="border: 1px">
       <el-row class="xs">
-        <el-col :xs="5" :xl="6">
+        <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="6">
           <div class="grid-content bg-purple-dark">
             <el-button type="primary" icon="el-icon-edit" @click="handleCreate('driver')">添加司机</el-button>
-            <el-table
-              :data="tableData"
-              border
-              style="width: 100% ; height:auto">
+            <el-table border
+                      :data="tableData"
+                      style="width: 100% ; height:auto">
               <el-table-column
                 prop="name"
                 label="司机姓名">
@@ -17,47 +16,80 @@
                 prop="phoneNumber"
                 label="手机号">
               </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="deleteName(scope.$index, scope.row)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
             </el-table>
           </div>
         </el-col>
-        <el-col :xs="5" :xl="6">
+        <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="6">
           <div class="grid-content bg-purple-dark">
             <el-button type="primary" icon="el-icon-edit" @click="handleCreate('car')">添加车牌</el-button>
-            <el-table
-              :data="tableData1"
-              border
-              style="width: 100% ; height:auto">
+            <el-table border
+                      :data="tableData1"
+                      style="width: 100% ; height:auto">
               <el-table-column
                 prop="carNumber"
                 label="车牌号">
               </el-table-column>
-            </el-table>
-          </div>
-        </el-col>
-        <el-col :xs="5" :xl="6">
-          <div class="grid-content bg-purple-dark">
-            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区</el-button>
-            <el-table
-              :data="tableData2"
-              border
-              style="width: 100% ; height:auto">
-              <el-table-column
-                prop="number"
-                label="库区">
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="deleteCar(scope.$index, scope.row)">删除
+                  </el-button>
+                </template>
               </el-table-column>
             </el-table>
           </div>
         </el-col>
-        <el-col :xs="5" :xl="6">
+        <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="6">
+          <div class="grid-content bg-purple-dark">
+            <el-button type="primary" icon="el-icon-edit" @click="handleCreate('area')">添加库区</el-button>
+            <el-table border
+                      :data="tableData2"
+                      style="width: 100%;height: auto ">
+              <el-table-column
+                prop="number"
+                label="库区">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="deletewarehouse(scope.$index, scope.row)">删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+        <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="6">
           <div class="grid-content bg-purple-dark">
             <el-button type="primary" icon="el-icon-edit" @click="handleCreate('frame')">添加大架</el-button>
-            <el-table
-              :data="tableData3"
-              border
-              style="width: 100% ; height:auto">
+            <el-table border
+                      :data="tableData3"
+                      style="width: 100% ; height:auto">
               <el-table-column
                 prop="number"
                 label="大架号">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="deleteShelves(scope.$index, scope.row)">删除
+                  </el-button>
+                </template>
               </el-table-column>
             </el-table>
           </div>
@@ -80,6 +112,15 @@
               <el-table-column
                 prop="phoneNumber"
                 label="手机号">
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button
+                    size="mini"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)">删除
+                  </el-button>
+                </template>
               </el-table-column>
             </el-table>
           </div>
@@ -173,7 +214,7 @@
   import axios from 'axios'
 
   export default {
-    data () {
+    data() {
       return {
         type: '',
         name: '',
@@ -202,11 +243,14 @@
       }
     },
     methods: {
-      init () {
+      init() {
         axios.get('from/getInfos')
           .then((response) => {
+            this.tableData = []
+            this.tableData1 = []
+            this.tableData2 = []
+            this.tableData3 = []
             let res = response.data
-            console.log(res)
             let driver = res.drivers
             let carNumbers = res.carNumbers
             let shelves = res.shelves
@@ -219,21 +263,17 @@
               this.tableData1.push(carNumbers[i])
             }
             for (let i = 0; i < shelves.length; i++) {
-              this.tableData2.push(shelves[i])
+              this.tableData3.push(shelves[i])
             }
             for (let i = 0; i < warehouses.length; i++) {
-              this.tableData3.push(warehouses[i])
+              this.tableData2.push(warehouses[i])
             }
-            // console.log(this.nameOptions)
-            // console.log(this.carNumberOptions)
-            // console.log(this.shelvesOptions)
-            // console.log(this.wareHousesOptions)
           })
           .catch(function (error) {
             console.log(error)
           })
       },
-      handleCreate (type) {
+      handleCreate(type) {
         if (type === 'driver') {
           this.driverInput = false
           this.type = 'driver'
@@ -249,7 +289,7 @@
         }
         this.dialogFormVisible = true
       },
-      search () {
+      search() {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -271,7 +311,7 @@
           console.log(this.tableData)
         })
       },
-      submit (type) {
+      submit(type) {
         let name = this.name
         let phoneNumber = this.phoneNumber
         let carNum = this.carNum
@@ -333,43 +373,174 @@
           this.frameInput = true
         }
       },
-      async addName (data) {
-        try {
-          let res = axios.post('driver', data)
+      async addName(data) {
+        axios.post('driver', data).then(res => {
+          console.log('res' + res)
           this.$message.success('提交信息成功')
-        } catch (error) {
-          console.log(error)
-          this.$message.error(error)
-        }
+          this.init()
+        }).catch((error) => {
+          console.log(error);
+          this.$message.error({
+            title: '错误',
+            message: error.response.data.message,
+            duration: 0
+          });
+        })
       },
-      async addCarNum (data) {
-        try {
-          let res = axios.post('carNumber', data)
-          this.$message.success('提交信息成功')
-        } catch (error) {
-          console.log(error)
-          this.$message.error(error)
-        }
+      async addCarNum(data) {
+        axios.post('carNumber', data)
+          .then(res => {
+            console.log('res' + res)
+            this.$message.success('提交信息成功')
+            this.init()
+          }).catch((error) => {
+          console.log(error);
+          this.$message.error({
+            title: '错误',
+            message: error.response.data.message,
+            duration: 0
+          });
+        })
       },
-      async addarea (data) {
-        try {
-          let res = axios.post('warehouse', data)
-          this.$message.success('提交信息成功')
-        } catch (error) {
-          console.log(error)
-          this.$message.error(error)
-        }
+      async addarea(data) {
+        let res = axios.post('warehouse', data)
+          .then(res => {
+            console.log('res' + res)
+            this.$message.success('提交信息成功')
+            this.init()
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error.response.data.message,
+              duration: 0
+            });
+          })
       },
-      async addshelves (data) {
-        try {
-          let res = axios.post('shelves', data)
-          this.$message.success('提交信息成功')
-        } catch (error) {
-          console.log(error)
-          this.$message.error(error)
-        }
+      async addshelves(data) {
+        axios.post('shelves', data)
+          .then(res => {
+            console.log('res' + res)
+            this.$message.success('提交信息成功')
+            this.init()
+          }).catch((error) => {
+          console.log(error);
+          this.$message.error({
+            title: '错误',
+            message: error.response.data.message,
+            duration: 0
+          });
+        })
+      }
+      , deleteName(index, row) {
+        this.$confirm('此操作将永久删除该项, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.delete('driver?id=' + row.id).then((response) => {
+            this.init();
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error,
+              duration: 0
+            });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
-      cancel () {
+      deleteCar(index, row) {
+        this.$confirm('此操作将永久删除该项, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.delete('carNumber?id=' + row.id).then((response) => {
+            this.init();
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error,
+              duration: 0
+            });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      deleteShelves(index, row) {
+        this.$confirm('此操作将永久删除该项, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.delete('shelves?id=' + row.id).then((response) => {
+            this.init();
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error,
+              duration: 0
+            });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      deletewarehouse(index, row) {
+        this.$confirm('此操作将永久删除该项, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.delete('warehouse?id=' + row.id).then((response) => {
+            this.init();
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error,
+              duration: 0
+            });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      cancel() {
         this.dialogFormVisible = false
         this.driverInput = true
         this.carInput = true
@@ -382,7 +553,7 @@
         this.frame = ''
       }
     },
-    created () {
+    created() {
       this.init()
     }
   }
