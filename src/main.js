@@ -4,6 +4,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css';
 import App from './App'
 import router from './router'
+import '../config/axios'
+
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

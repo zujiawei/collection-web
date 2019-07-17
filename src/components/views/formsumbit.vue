@@ -123,19 +123,19 @@
         },
         rules: {
           name: [
-            { required: true }
+            {required: true}
           ],
           carNum: [
-            { required: true }
+            {required: true}
           ],
           area: [
-            { required: true }
+            {required: true}
           ],
           frameNum: [
-            { required: true }
+            {required: true}
           ],
           startDate: [
-            { required: true }
+            {required: true}
           ]
         }
       }
@@ -165,10 +165,6 @@
             for (let i = 0; i < warehouses.length; i++) {
               this.wareHousesOptions.push(warehouses[i].number)
             }
-            // console.log(this.nameOptions)
-            // console.log(this.carNumberOptions)
-            // console.log(this.shelvesOptions)
-            // console.log(this.wareHousesOptions)
           })
           .catch(function (error) {
             console.log(error)
@@ -214,13 +210,17 @@
         })
       },
       async add(data) {
-        try {
-          let res = axios.post('/from', data)
+        axios.post('/from', data).then(res => {
+          this.form.name = ''
+          this.form.carNum = ''
+          this.form.area = ''
+          this.form.frameNum = ''
+          this.form.startDate = ''
           this.$message.success('提交信息成功，祝您一路顺风')
-        } catch (error) {
+        }).catch(error => {
           console.log(error)
           this.$message.error(error)
-        }
+        })
       }
     },
   }

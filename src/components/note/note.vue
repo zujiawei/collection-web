@@ -40,19 +40,24 @@
       </el-row>
 
       <el-row class="submit" :gutter="6" type="flex" justify="center">
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="4">
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3">
           <div class="grid-content bg-purple">
             <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
           </div>
         </el-col>
-        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="4">
+        <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3">
           <div class="grid-content bg-purple">
-            <el-button type="primary" icon="el-icon-refresh-left">重置</el-button>
+            <el-button type="primary" icon="el-icon-refresh-left" @click="reset()">重置</el-button>
           </div>
         </el-col>
-        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="4">
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3">
           <div class="hidden-xs-only">
             <el-button type="primary"><i class="el-icon-upload el-icon--right" @click="excel()">导出Excel</i></el-button>
+          </div>
+        </el-col>
+        <el-col :xs="8" :sm="6" :md="4" :lg="3" :xl="3">
+          <div class="hidden-xs-only">
+            <el-button type="primary"><i class="el-icon-upload el-icon--right" @click="restore()">数据恢复</i></el-button>
           </div>
         </el-col>
       </el-row>
@@ -86,6 +91,15 @@
             prop="startDate"
             label="发车日期">
           </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="danger"
+                @click="deleteNote(scope.$index, scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
@@ -98,7 +112,7 @@
 
   export default {
     name: 'Upgrade',
-    data () {
+    data() {
       return {
         name: '',
         carNum: '',
@@ -118,9 +132,10 @@
       }
     },
     methods: {
-      init () {
+      init() {
         axios.get('from/getNoteData').then((response) => {
           console.log(response.data.data)
+          this.tableData = []
           let res = response.data.data
           let virtual = []
           for (let i = 0; i < res.length; i++) {
@@ -136,7 +151,7 @@
           })
         })
       },
-      excel () {
+      excel() {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -156,7 +171,7 @@
           window.location.href = objectUrl
         })
       },
-      search () {
+      search() {
         let name = this.name
         let carNum = this.carNum
         let area = this.area
@@ -178,24 +193,53 @@
           }
           console.log(this.tableData)
         })
-      },
-      parseResult (result) {
-        if (result.resultCode === 0) {
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          })
-        } else {
-          this.$message({
-            message: result.resultMsg,
-            type: 'error'
-          })
-        }
       }
+      , deleteNote(index, row) {
+        this.$confirm('此操作将永久删除该项, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.delete('from?id=' + row.id).then((response) => {
+            this.init();
+            this.$message({
+              message: '操作成功',
+              type: 'success'
+            });
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error({
+              title: '错误',
+              message: error,
+              duration: 0
+            });
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      reset() {
+        this.name = ''
+        this.carNum = ''
+        this.area = ''
+        this.frameNum = ''
+        this.startDate = ''
+      },
+      restore() {
+        axios.get('from/restore').then((response) => {
+          this.$message.success("数据导入成功")
+        }).catch(error => {
+          this.$message.error(error)
+        })
+      },
     },
-    created () {
-      this.init()
-    }
+  created()
+  {
+    this.init()
+  }
   }
 </script>
 
